@@ -51,6 +51,7 @@ typedef struct square{
 typedef struct player{
     char name[50];
     enum color col;
+    int points;
 }player; 
 
 

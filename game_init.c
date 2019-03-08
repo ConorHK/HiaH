@@ -58,6 +58,7 @@ int initialize_players(player players[]){
                 playerCount--;
                 break;
             }
+            players[i].points = 0;
         }
 
         //Returns the total amount of players initialized.
