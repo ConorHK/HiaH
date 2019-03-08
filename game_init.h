@@ -5,7 +5,7 @@
  */
 
 /* 
- * File:   newfile.h
+ * File:   game_init.h
  * Author: lpasqua
  *
  * Created on 06 March 2019, 12:18
@@ -49,8 +49,8 @@ typedef struct square{
  * such as a name and a color.
  */
 typedef struct player{
-    
-    
+    char name[50];
+    enum color col;
 }player; 
 
 
