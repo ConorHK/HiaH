@@ -40,9 +40,28 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]){
  * Output: The number of players of the game
  */
 int initialize_players(player players[]){
-    
-    //YOU WILL NEED TO IMPLEMENT THIS FUNCTION IN THIS LAB
-        return 0;
+        
+        //Variable to keep track of how many players are in the game.
+        int playerCount = 0;
+        printf("\n");
+        
+        //Loop to collect names for up to 6 players.
+        for(size_t i = 0; i < 6; i++){
+            
+            //Collecting player names.
+            printf("\nPlease enter player name: ");
+            fgets(players[i].name, 50, stdin);
+            playerCount++;
+
+            //Check to see if a newline is entered. If so, loop is broken.
+            if(players[i].name[0] == '\n'){
+                playerCount--;
+                break;
+            }
+        }
+
+        //Returns the total amount of players initialized.
+        return playerCount;
     }
     
    
