@@ -1,9 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File: game_logic.c
+ * Project: f:\Documents\C\Semester 2\Hedgehogs in a Hurry\
+ * Created Date: Saturday March 9th 2019 4:44:25 pm
+ * Author: ConorHK, thomasreilly1011 (based on template by lpasquale) 
+ * -----
+ * Description: File responsible for initialzing the game.
  */
-
 
 #include "game_init.h"
 #include <stdio.h>
@@ -16,13 +18,20 @@ void printLine();
  * Input: t - pointer to a token
  * Output: initial of the color of the token
  */
-char print_token(token *t){
-    if((*t).col== PINK) return 'P';
-    if((*t).col== RED) return 'R';
-    if((*t).col== BLU) return 'B';
-    if((*t).col== GREEN) return 'G';
-    if((*t).col== ORANGE) return 'O';
-    if((*t).col== YELLOW) return 'Y';
+char print_token(token *t)
+{
+    if ((*t).col == PINK)
+        return 'P';
+    if ((*t).col == RED)
+        return 'R';
+    if ((*t).col == BLU)
+        return 'B';
+    if ((*t).col == GREEN)
+        return 'G';
+    if ((*t).col == ORANGE)
+        return 'O';
+    if ((*t).col == YELLOW)
+        return 'Y';
     return '\0';
 }
 
@@ -31,40 +40,47 @@ char print_token(token *t){
  * 
  * Input: the board to be printed. 
  */
-void print_board(square board[NUM_ROWS][NUM_COLUMNS]){
+void print_board(square board[NUM_ROWS][NUM_COLUMNS])
+{
     printf("                THE BOARD\n");
-    for(int i =0; i < NUM_ROWS; i++){
-       
+    for (int i = 0; i < NUM_ROWS; i++)
+    {
+
         //prints an horizontal line
         printLine();
         //prints the row number
         printf(" %d ", i);
-        char c = '\0' ;
+        char c = '\0';
         //if the square (i,j) is occupied,
         //c is assigned the initial of the color of the token that occupies the square
-        for (int j = 0; j < NUM_COLUMNS; j++){
-            if(board[i][j].stack != NULL){
+        for (int j = 0; j < NUM_COLUMNS; j++)
+        {
+            if (board[i][j].stack != NULL)
+            {
                 c = print_token(board[i][j].stack);
             }
             //if the square (i,j) is empty
-            else{
+            else
+            {
                 //c is assigned 'X' if the square represents an obstacle
-                if(board[i][j].type == OBSTACLE)
+                if (board[i][j].type == OBSTACLE)
                     c = 'X';
                 //c is assigned an empty space otherwise
-                else c = ' ';
+                else
+                    c = ' ';
             }
             printf("| %c ", c);
         }
-        printf ("|\n");
+        printf("|\n");
     }
     printLine();
     //prints the number of the columns at the end of the board
     printf("     0   1   2   3   4   5   6   7   8\n");
 }
 
-void printLine(){
-  printf("   -------------------------------------\n");  
+void printLine()
+{
+    printf("   -------------------------------------\n");
 }
 
 /*
@@ -74,11 +90,10 @@ void printLine(){
  *        players - the array of the players
  *        numPlayers - the number of players  
  */
-void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers){
+void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
+{
     // TO BE IMPLEMENTED
-
 }
-
 
 /*
  * Place tokens in the first column of the board
@@ -88,9 +103,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
  *        numPlayers - the number of players  
  */
 
-void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers){
+void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
+{
     //TO BE IMPLEMENTED
 }
-
-
-
