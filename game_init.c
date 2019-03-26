@@ -52,6 +52,7 @@ int initialize_players(player players[])
     printf("\n");
 
     //Loop to collect names for up to 6 players.
+    printf("\nInput an empty string to complete player name input.\n");
     for (size_t i = 0; i < 6; i++)
     {
 
