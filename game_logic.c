@@ -9,6 +9,7 @@
 
 #include "game_init.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void printLine();
 
@@ -98,7 +99,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
     for(size_t i = 0; i < 4; i++){
         for(size_t j = 0; j < numPlayers; j++){
-            printf("Player %d: Please enter a square: ", j);
+            printf("Player %d, please enter a square: ", j);
             scanf("%d", &selectedSquare);
 
             //TO BE IMPLEMENTED:
