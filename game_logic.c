@@ -99,13 +99,34 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
     for(size_t i = 0; i < 4; i++){
         for(size_t j = 0; j < numPlayers; j++){
-            printf("Player %d, please enter a square: ", j);
+            step:
+            printf("Player %d, please enter a square: ", j+1);
             scanf("%d", &selectedSquare);
+            
+            //Check to see if input is valid.
+            if(selectedSquare < 0 || selectedSquare > 5){
+                puts("Error: Invalid input.");
+                goto step;
+            }
+            /*TO BE IMPLEMENTED: verify whether the square selected by the 
+            user has the minimum number of tokens and whether it does not 
+            contain a token of the same color selected by the player */
+             //if((board[selectedSquare][0].numTokens == minNumOfTokens) && board[selectedSquare][0].stack->col != players[j].col){
+               // printf("test");
+                /*board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
+                board[selectedSquare][0].stack->col = players[j].col;
+                board[selectedSquare][0].numTokens++;*/
+            // }
 
-            //TO BE IMPLEMENTED:
+            /*else{
+                puts("Error: Invalid input.");
+                goto step;
+            }*/
             board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
             board[selectedSquare][0].stack->col = players[j].col;
             board[selectedSquare][0].numTokens++;
+            
+            
 
             //Updates the minimum number of tokens.
             if(((numPlayers * i) + j + 1) % NUM_ROWS == 0){
