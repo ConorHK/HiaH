@@ -10,6 +10,8 @@
 #include "game_init.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
 
 void printLine();
 
@@ -19,6 +21,13 @@ void printLine();
  * Input: t - pointer to a token
  * Output: initial of the color of the token
  */
+
+int rolldice();
+/*
+ * Returns a random number between 1 and 6.
+ */
+
+
 char print_token(token *t)
 {
     if ((*t).col == PINK)
@@ -126,5 +135,14 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
 {
-    //TO BE IMPLEMENTED
+    bool gameover;
+    while(gameover == false){
+        rolldice();
+    }
+}
+
+int rolldice(){
+    srand(time(NULL));
+
+    return rand()%6 + 1;
 }
