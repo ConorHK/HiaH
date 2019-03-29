@@ -92,7 +92,27 @@ void printLine()
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
 {
-    // TO BE IMPLEMENTED
+    //The minimum number of tokens placed on a square in the first column of the board.
+    int minNumOfTokens = 0;
+    int selectedSquare = 0;
+
+    for(size_t i = 0; i < 4; i++){
+        for(size_t j = 0; j < numPlayers; j++){
+            printf("Player %d: Please enter a square: ", j);
+            scanf("%d", &selectedSquare);
+
+            //TO BE IMPLEMENTED:
+            board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
+            board[selectedSquare][0].stack->col = players[j].col;
+            board[selectedSquare][0].numTokens++;
+
+            //Updates the minimum number of tokens.
+            if(((numPlayers * i) + j + 1) % NUM_ROWS == 0){
+                minNumOfTokens++;
+            }
+
+        }
+    }
 }
 
 /*
