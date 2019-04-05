@@ -9,6 +9,7 @@
 
 #include "game_init.h"
 #include <stdio.h>
+#include <stdbool.h>
 
 /*
  * This function creates the board for the first time
@@ -34,6 +35,12 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS])
                 board[i][j].type = NORMAL;
             }
             board[i][j].stack = NULL;
+
+            //**Initializes each square to 0 tokens.
+            board[i][j].numTokens = 0;
+
+            //**Sets initial colour of board to EMPTY
+            // board[i][j].stack->col = EMPTY;
         }
     }
 }
@@ -70,6 +77,93 @@ int initialize_players(player players[])
         players[i].numTokensLastCol = 0;
     }
 
+    //Assigning colours to players:
+    bool flag[6];
+    for (size_t i = 0; i < 6; i++)
+    {
+        flag[i] = false;
+    }
+    for (size_t i = 0; i < playerCount; i++)
+    {
+        colorSelection(players, flag, i);
+    }
+
     //Returns the total amount of players initialized.
     return playerCount;
+}
+
+void colorSelection(player players[], bool flag[], int playerNumb)
+{
+    int colourChoice;
+    char *colours[6] = {"RED", "BLU", "GREEN", "YELLOW", "PINK", "ORANGE"};
+
+reChoose:
+    printf("\nPlayer %d: %sPlease select a colour from the list below:\n", playerNumb + 1, players[playerNumb].name);
+    for (size_t i = 0; i < 6; i++)
+    {
+        if (flag[i] != true)
+        {
+            printf("\t%d: %s\n", i + 1, colours[i]);
+        }
+        else
+        {
+            printf("\t   TAKEN\n");
+        }
+    }
+    scanf("%d", &colourChoice);
+    if (flag[colourChoice-1] == true)
+    {
+        printf("\nERROR: Colour already taken.\n");
+        goto reChoose;
+    }
+    switch (colourChoice)
+    {
+    case 1:
+        if (flag[0] == false)
+        {
+            players[playerNumb].col = RED;
+            flag[0] = true;
+            break;
+        }
+
+    case 2:
+        if (flag[1] == false)
+        {
+            players[playerNumb].col = BLU;
+            flag[1] = true;
+            break;
+        }
+
+    case 3:
+        if (flag[2] == false)
+        {
+            players[playerNumb].col = GREEN;
+            flag[2] = true;
+            break;
+        }
+
+    case 4:
+        if (flag[3] == false)
+        {
+            players[playerNumb].col = YELLOW;
+            flag[3] = true;
+            break;
+        }
+
+    case 5:
+        if (flag[4] == false)
+        {
+            players[playerNumb].col = PINK;
+            flag[4] = true;
+            break;
+        }
+
+    case 6:
+        if (flag[5] == false)
+        {
+            players[playerNumb].col = ORANGE;
+            flag[5] = true;
+            break;
+        }
+    }
 }
