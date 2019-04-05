@@ -6,7 +6,7 @@
  * -----
  * Description: File responsible for initialzing the game.
  */
-
+#include <stdbool.h>
 //number of rows of the board
 #define NUM_ROWS 6
 //number of columns of the board
@@ -77,3 +77,5 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]);
  *
  */
 int initialize_players(player players[]);
+
+void colorSelection(player players[], bool flag[], int playerNumb);
