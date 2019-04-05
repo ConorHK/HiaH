@@ -105,27 +105,22 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             
             //Check to see if input is valid.
             if(selectedSquare < 0 || selectedSquare > 5){
+                puts("Error: Invalid input. CHOICE");
+                goto step;
+            }
+            /*Verify whether the square selected by the 
+            user has the minimum number of tokens and whether it does not 
+            contain a token of the same color selected by the player */
+             if((board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col)){
+                board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
+                board[selectedSquare][0].stack->col = players[j].col;
+                board[selectedSquare][0].numTokens++;
+            }
+
+            else{
                 puts("Error: Invalid input.");
                 goto step;
             }
-            /*TO BE IMPLEMENTED: verify whether the square selected by the 
-            user has the minimum number of tokens and whether it does not 
-            contain a token of the same color selected by the player */
-             //if((board[selectedSquare][0].numTokens == minNumOfTokens) && board[selectedSquare][0].stack->col != players[j].col){
-               // printf("test");
-                /*board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
-                board[selectedSquare][0].stack->col = players[j].col;
-                board[selectedSquare][0].numTokens++;*/
-            // }
-
-            /*else{
-                puts("Error: Invalid input.");
-                goto step;
-            }*/
-            board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
-            board[selectedSquare][0].stack->col = players[j].col;
-            board[selectedSquare][0].numTokens++;
-            
             
 
             //Updates the minimum number of tokens.
@@ -133,6 +128,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                 minNumOfTokens++;
             }
 
+            print_board(board);
         }
     }
 }

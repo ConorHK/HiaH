@@ -38,6 +38,9 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS])
 
             //**Initializes each square to 0 tokens.
             board[i][j].numTokens = 0;
+
+            //**Sets initial colour of board to EMPTY
+            // board[i][j].stack->col = EMPTY;
         }
     }
 }

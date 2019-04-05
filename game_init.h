@@ -27,7 +27,8 @@ enum color
     GREEN,
     YELLOW,
     PINK,
-    ORANGE
+    ORANGE,
+    EMPTY
 };
 
 //defines a token.
