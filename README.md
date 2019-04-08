@@ -25,6 +25,8 @@ Use the Git distributed version control to commit your code regularly from the b
 *Code Design Requirements:*
 
 ●      Comment your code, where necessary.
+
 ●      Use functions where you can.
+
 Separate your code into independent modules as much as you can.
 
