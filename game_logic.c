@@ -128,6 +128,14 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
             else{
                 puts("Error: Invalid input.");
+                printf("\nValid moves: ");
+                for(size_t m = 0; m < 5; m++){
+                    if((board[m][0].numTokens == minNumOfTokens) && (board[m][0].stack == NULL || board[m][0].stack->col != players[j].col)){
+                        printf("%d ", m);
+                    }
+                }
+                printf("\n");
+                
                 goto step;
             }
             
