@@ -108,19 +108,44 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
     for(size_t i = 0; i < 4; i++){
         for(size_t j = 0; j < numPlayers; j++){
-            printf("Player %d, please enter a square: ", j);
+            step:
+            printf("Player %d, please enter a square: ", j+1);
             scanf("%d", &selectedSquare);
+            
+            //Check to see if input is valid.
+            if(selectedSquare < 0 || selectedSquare > 5){
+                puts("Error: Invalid input. CHOICE");
+                goto step;
+            }
+            /*Verify whether the square selected by the 
+            user has the minimum number of tokens and whether it does not 
+            contain a token of the same color selected by the player */
+             if((board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col)){
+                board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
+                board[selectedSquare][0].stack->col = players[j].col;
+                board[selectedSquare][0].numTokens++;
+            }
 
-            //TO BE IMPLEMENTED:
-            board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
-            board[selectedSquare][0].stack->col = players[j].col;
-            board[selectedSquare][0].numTokens++;
+            else{
+                puts("Error: Invalid input.");
+                printf("\nValid moves: ");
+                for(size_t m = 0; m < 5; m++){
+                    if((board[m][0].numTokens == minNumOfTokens) && (board[m][0].stack == NULL || board[m][0].stack->col != players[j].col)){
+                        printf("%d ", m);
+                    }
+                }
+                printf("\n");
+                
+                goto step;
+            }
+            
 
             //Updates the minimum number of tokens.
             if(((numPlayers * i) + j + 1) % NUM_ROWS == 0){
                 minNumOfTokens++;
             }
 
+            print_board(board);
         }
     }
 }
