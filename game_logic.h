@@ -31,3 +31,34 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
  *        numPlayers - the number of players 
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers);
+
+/*
+ * Returns a random number between 1 and 6.
+ */
+int rolldie();
+/*
+ * Gives the player the option to move a specified token up or down.
+ * 
+ * Input: board - a 6x9 array of squares that represents the board
+ *        current player - the player who's turn it is
+ *        dieRoll - the number rolled on the die
+ */
+void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+
+/*
+ * Gives the player the option to move a specified token up or down.
+ * 
+ * Input: board - a 6x9 array of squares that represents the board
+ *        currentPlayer - the player who's turn it is
+ *        dieRoll - the number rolled on the die
+ * 
+ */
+void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+
+/*
+ * Checks to see if the current player has 3 of their tokens in the final column
+ * 
+ *  Output: true: if the player has 3 tokens in the final column
+ *          false: if the player hasn't 3 tokens in the final column
+ */
+bool winCheck(player currentPlayer);
