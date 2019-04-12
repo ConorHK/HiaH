@@ -8,6 +8,7 @@
  */
 
 #include "game_init.h"
+#include "game_logic.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -167,10 +168,10 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         //Each loop represents each players go.
         for(int i=0; i < numPlayers; i++)
         {
-            dieRoll = rollDie();
-            moveVerticle(board, players[i], dieRoll);
-            moveHorizontal(board, players[i], dieRoll);
-            win = winCheck(players[i]);
+           dieRoll = rollDie();
+           moveVertical(board, players[i], dieRoll);
+           moveHorizontal(board, players[i], dieRoll);
+           win = winCheck(players[i]);
         }
     }
 }
@@ -178,11 +179,16 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 int rollDie(){
     srand(time(NULL));
     int dieRoll = rand()%6 + 1;
-    printf("%s%d", "Rolling the die!\nThe die says ", dieRoll);
+    printf("Die rolling");
+    delay(1);
+    printf(".");
+    delay(1);
+    printf(".");
+    printf(" %d!\n", dieRoll);
     return dieRoll;
 }
 
-void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
+void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
 
 }
 
@@ -193,3 +199,16 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, i
 bool winCheck(player currentPlayer){
 
 }
+
+void delay(int number_of_seconds) 
+{ 
+    // Converting time into milli_seconds 
+    int milli_seconds = 1000 * number_of_seconds; 
+  
+    // Stroing start time 
+    clock_t start_time = clock(); 
+  
+    // looping till required time is not acheived 
+    while (clock() < start_time + milli_seconds) 
+        ; 
+} 
