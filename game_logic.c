@@ -22,10 +22,7 @@ void printLine();
  * Output: initial of the color of the token
  */
 
-int rolldice();
-/*
- * Returns a random number between 1 and 6.
- */
+
 
 
 char print_token(token *t)
@@ -160,14 +157,39 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
 {
-    bool gameover;
-    while(gameover == false){
-        rolldice();
+    //Game status is true while the game is still running and false when the game is won or lost.
+    bool win;
+    int dieRoll;
+
+    //Each loop represents a new round ingame.
+    while(win == false)
+    {
+        //Each loop represents each players go.
+        for(int i=0; i < numPlayers; i++)
+        {
+            dieRoll = rollDie();
+            moveVerticle(board, players[i], dieRoll);
+            moveHorizontal(board, players[i], dieRoll);
+            win = winCheck(players[i]);
+        }
     }
 }
 
-int rolldice(){
+int rollDie(){
     srand(time(NULL));
+    int dieRoll = rand()%6 + 1;
+    printf("%s%d", "Rolling the die!\nThe die says ", dieRoll);
+    return dieRoll;
+}
 
-    return rand()%6 + 1;
+void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
+
+}
+
+void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
+
+}
+
+bool winCheck(player currentPlayer){
+
 }
