@@ -112,7 +112,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             
             //Check to see if input is valid.
             if(selectedSquare < 0 || selectedSquare > 5){
-                puts("Error: Invalid input. CHOICE");
+                puts("Error: Invalid input.");
                 goto step;
             }
             /*Verify whether the square selected by the 
@@ -169,10 +169,11 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         for(int i=0; i < numPlayers; i++)
         {
            dieRoll = rollDie();
-           moveVertical(board, players[i], dieRoll);
-           moveHorizontal(board, players[i], dieRoll);
-           win = winCheck(players[i]);
+          // moveVertical(board, players[i], dieRoll);
+          // moveHorizontal(board, players[i], dieRoll);
+          // win = winCheck(players[i]);
         }
+        win = true;
     }
 }
 
@@ -189,6 +190,55 @@ int rollDie(){
 }
 
 void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
+    int choice;
+
+    reChoose:
+    printf("Would you like to move one of your tokens up/down?\n");
+    printf("\t1: Yes\n");
+    printf("\t2: No\n");
+
+    scanf("%d", &choice);
+    switch(choice){
+        case 1:
+            int rowChoice, colChoice, moveChoice;
+            printf("Please select a token: \n");
+            printf("\tRow: ");
+            scanf("%d", &rowChoice);
+            printf("\tColumn: ");
+            scanf("%d", &colChoice);
+
+            if(board[rowChoice][colChoice].stack->col == currentPlayer.col){
+                upOrDown:
+                printf("\nWould you like to move the token up or down?\n");
+                printf("\t1: Up\n");
+                printf("\t: Down\n");
+                scanf("%d", &moveChoice);
+
+                switch(moveChoice){
+                    case 1:
+
+                            break;
+                    case 2:
+                            break;
+                    default:
+                            printf("\nERROR: Invalid input.\n");
+                            delay(1);
+                            goto upOrDown;
+                            break;
+                }
+            }
+
+            break;
+        case 2:
+            break;
+
+        default:
+            printf("ERROR: Invalid input.\n");
+            delay(1);
+            goto reChoose;
+            break;
+    }
+
 
 }
 
