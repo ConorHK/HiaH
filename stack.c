@@ -12,7 +12,9 @@
 
 
 //push
-token * push(square board[NUM_ROWS][NUM_COLUMNS], token *top){
-    token *curr = top;
-    top = malloc(sizeof(token));
+void move_token(square dest, square origin){
+    dest.stack[dest.numTokens] = origin.stack[origin.numTokens];
+    dest.stack[dest.numTokens].col = EMPTY;
+    dest.numTokens--;
+    origin.numTokens++;
 }

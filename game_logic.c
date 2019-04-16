@@ -198,8 +198,7 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, i
         printf("%d token(s) on row %d! Which column would you like to move from?", numTokens, dieRoll);
         scanf("%d", choice);
 
-        //removeToken()
-        //addToken()
+        
     } else if(numTokens == 0){
         printf("There are no tokens on this row!");
 

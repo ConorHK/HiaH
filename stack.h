@@ -10,10 +10,4 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-//push
-token * push(square board[NUM_ROWS][NUM_COLUMNS], token *top){
-    token *curr = top;
-    top = malloc(sizeof(token));
-    top->col = 
-}
+void move_token(square dest, square origin);
