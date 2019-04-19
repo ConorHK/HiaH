@@ -7,12 +7,21 @@
  * Description: File responsible for initialzing the game.
  */
 #include "game_init.h"
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
 
 void printLine();
+
+int rollDie();
+
+void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+
+void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+
+bool winCheck(player currentPlayer);
 
 /*
  * Returns the first letter associated with the color of the token
@@ -61,7 +70,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS])
         //c is assigned the initial of the color of the token that occupies the square
         for (int j = 0; j < NUM_COLUMNS; j++)
         {
-            if (board[i][j].stack[board[i][j].numTokens].col != EMPTY)
+            if (board[i][j].stack[board[i][j].numTokens-1].col != EMPTY)
             {
                 c = print_token(board[i][j].stack[board[i][j].numTokens-1]);
             }
@@ -156,7 +165,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
 {
     //Game status is true while the game is still running and false when the game is won or lost.
-    bool win;
+    bool win = false;
     int dieRoll;
 
     //Each loop represents a new round ingame.
@@ -165,10 +174,10 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         //Each loop represents each players go.
         for(int i=0; i < numPlayers; i++)
         {
-            //dieRoll = rollDie();
-            //moveVerticle(board, players[i], dieRoll);
-            //moveHorizontal(board, players[i], dieRoll);
-            //win = winCheck(players[i]);
+            dieRoll = rollDie();
+            moveVerticle(board, players[i], dieRoll);
+            moveHorizontal(board, players[i], dieRoll);
+            win = winCheck(players[i]);
         }
     }
 }
@@ -176,7 +185,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 int rollDie(){
     srand(time(NULL));
     int dieRoll = rand()%6;
-    printf("%s%d", "Rolling the die!\nThe die says ", dieRoll);
+    printf("\n%s%d\n", "Rolling the die!\nThe die says ", dieRoll);
     return dieRoll;
 }
 
@@ -185,29 +194,31 @@ void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
 }
 
 void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
-    int numTokens, column;
-    for(int i=0; i < 9; i++){
+    int tokens = 0, column = 0;
+    for(int i=0; i < NUM_COLUMNS; i++){
         if(board[dieRoll][i].numTokens > 0){
-            numTokens++;
+            tokens++;
             column = i;
         }
     }
 
-    if(numTokens > 1){
+    if(tokens > 1){
+        //add statement to check if tokens are on chosen column
         int choice;
-        printf("%d token(s) on row %d! Which column would you like to move from?", numTokens, dieRoll);
+        printf("%d token(s) on row %d! Which column would you like to move from?\n", tokens, dieRoll);
         scanf("%d", choice);
 
+        move_token(&board[dieRoll][choice+1], &board[dieRoll][choice]);
         
-    } else if(numTokens == 0){
-        printf("There are no tokens on this row!");
+    } else if(tokens == 0){
+        printf("There are no tokens on this row!\n");
 
     } else {
-        printf("Moving the token on column %d forward!");
-        //removeToken()
-        //addToken()
-    }
+        printf("Moving the token on column %d forward!\n", column);
 
+        move_token(&board[dieRoll][column+1], &board[dieRoll][column]);
+    }
+    print_board(board);
 }
 
 bool winCheck(player currentPlayer){

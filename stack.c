@@ -7,14 +7,13 @@
  * Description: library for stack functions push pop.
  */
 #include "game_init.h"
+#include "game_logic.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-
-//push
-void move_token(square dest, square origin){
-    dest.stack[dest.numTokens] = origin.stack[origin.numTokens];
-    dest.stack[dest.numTokens].col = EMPTY;
-    dest.numTokens--;
-    origin.numTokens++;
+void move_token(square *dest, square *origin){
+    dest->numTokens++;
+    dest->stack[dest->numTokens-1].col = origin->stack[origin->numTokens-1].col;
+    origin->stack[origin->numTokens-1].col = EMPTY; 
+    origin->numTokens--;
 }

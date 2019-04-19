@@ -6,8 +6,6 @@
  * -----
  * Description: library for stack functions push pop.
  */
-#include "game_init.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-void move_token(square dest, square origin);
+
+void move_token(square *dest, square *origin);

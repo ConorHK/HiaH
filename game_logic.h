@@ -7,6 +7,8 @@
  * Description: File responsible for initialzing the game.
  */
 
+#include <stdbool.h>
+
 char print_token(token t);
 
 /*
@@ -37,7 +39,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 /*
  * Returns a random number between 1 and 6.
  */
-int rolldie();
+int rollDie();
 /*
  * Gives the player the option to move a specified token up or down.
  * 
