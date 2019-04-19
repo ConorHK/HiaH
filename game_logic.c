@@ -57,7 +57,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS])
         //prints an horizontal line
         printLine();
         //prints the row number
-        printf(" %d ", i);
+        printf(" %d ", i+1);
         char c = '\0';
         //if the square (i,j) is occupied,
         //c is assigned the initial of the color of the token that occupies the square
@@ -83,7 +83,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS])
     }
     printLine();
     //prints the number of the columns at the end of the board
-    printf("     0   1   2   3   4   5   6   7   8\n");
+    printf("     1   2   3   4   5   6   7   8   9\n");
 }
 
 void printLine()
@@ -111,6 +111,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
         step:
             printf("Player %d, please enter a square: ", j + 1);
             scanf("%d", &selectedSquare);
+            selectedSquare--;
 
             //Check to see if input is valid.
             if (selectedSquare < 0 || selectedSquare > 5)
@@ -135,7 +136,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                 {
                     if ((board[m][0].numTokens == minNumOfTokens) && (board[m][0].stack == NULL || board[m][0].stack->col != players[j].col))
                     {
-                        printf("%d ", m);
+                        printf("%d ", m+1);
                     }
                 }
                 printf("\n");
@@ -188,12 +189,13 @@ int rollDie()
 {
     srand(time(NULL));
     int dieRoll = rand() % 6 + 1;
-    printf("Die rolling");
-    delay(1);
+    printf("\nDie rolling");
+    delay(0.5);
     printf(".");
-    delay(1);
+    delay(0.5);
     printf(".");
-    printf(" %d!\n", dieRoll);
+    printf(" %d!\n\n", dieRoll);
+    delay(1);
     return dieRoll;
 }
 
@@ -202,27 +204,34 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
     int choice, rowChoice, colChoice, moveChoice;
 
 reChoose:
-    printf("%s:\n", currentPlayer.name);
+    printf("\n%s", currentPlayer.name);
     printf("Would you like to move one of your tokens up/down?\n");
     printf("\t1: Yes\n");
     printf("\t2: No\n");
-
+    printf("\nEnter choice: ");
     scanf("%d", &choice);
+    
     switch (choice)
     {
     case 1:
         printf("Please select a token: \n");
         printf("\tRow: ");
         scanf("%d", &rowChoice);
+        rowChoice--;
         printf("\tColumn: ");
         scanf("%d", &colChoice);
-
+        colChoice--;
+        if((board[rowChoice][colChoice].stack == NULL)){
+            printf("\nERROR: You do not have a token on that space!\n\n");
+            goto reChoose;
+        }
         if (board[rowChoice][colChoice].stack->col == currentPlayer.col)
         {
         upOrDown:
             printf("\nWould you like to move the token up or down?\n");
             printf("\t1: Up\n");
             printf("\t2: Down\n");
+            printf("\nEnter choice: ");
             scanf("%d", &moveChoice);
 
             switch (moveChoice)
@@ -253,6 +262,7 @@ reChoose:
         goto reChoose;
         break;
     }
+    printf("\n");
     print_board(board);
 }
 
@@ -264,15 +274,14 @@ bool winCheck(player currentPlayer)
 {
 }
 
-void delay(int number_of_seconds)
+void delay(float number_of_seconds)
 {
     // Converting time into milliseconds
-    int milli_seconds = 1000 * number_of_seconds;
+    float milli_seconds = 1000 * number_of_seconds;
 
     //Starting the timer
     clock_t start_time = clock();
 
     // looping till required time is not achieved
-    while (clock() < start_time + milli_seconds)
-        ;
+    while (clock() < start_time + (int)milli_seconds);
 }
