@@ -7,7 +7,7 @@
  * Description: File responsible for initialzing the game.
  */
 
-#include "game_init.h"
+#include "stack.h"
 #include "game_logic.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +15,9 @@
 #include <time.h>
 
 void printLine();
+
+token *top = NULL;
+token *curr = NULL;
 
 /*
  * Returns the first letter associated with the color of the token
@@ -119,8 +122,10 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             user has the minimum number of tokens and whether it does not 
             contain a token of the same color selected by the player */
              if((board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col)){
-                board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
+                /*board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
                 board[selectedSquare][0].stack->col = players[j].col;
+                board[selectedSquare][0].numTokens++;*/
+                push(board, players[j], selectedSquare, 0);
                 board[selectedSquare][0].numTokens++;
             }
 
@@ -190,7 +195,7 @@ int rollDie(){
 }
 
 void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
-    int choice;
+    /*int choice;
 
     reChoose:
     printf("Would you like to move one of your tokens up/down?\n");
@@ -239,7 +244,7 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
             break;
     }
 
-
+*/
 }
 
 void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){

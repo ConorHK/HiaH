@@ -6,7 +6,6 @@
  * -----
  * Description: File responsible for initialzing the game.
  */
-
 /*
  * Prints the board
  * 
