@@ -9,7 +9,7 @@
 
 #include "game_init.h"
 #include <stdio.h>
-#include <stdbool.h>
+// #include <stdbool.h>
 
 /*
  * This function creates the board for the first time
