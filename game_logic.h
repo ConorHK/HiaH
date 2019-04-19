@@ -6,7 +6,6 @@
  * -----
  * Description: File responsible for initialzing the game.
  */
-#include "game_init.h"
 /*
  * Prints the board
  * 

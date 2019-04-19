@@ -7,10 +7,11 @@
  * Description: File responsible for initialzing the game.
  */
 
+#include "stack.h"
 #include "game_logic.h"
 #include <stdio.h>
 #include <stdlib.h>
-// #include <stdbool.h>
+#include <stdbool.h>
 #include <time.h>
 
 void printLine();
@@ -124,7 +125,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                 /*board[selectedSquare][0].stack = (token *) malloc(sizeof(token));
                 board[selectedSquare][0].stack->col = players[j].col;
                 board[selectedSquare][0].numTokens++;*/
-                // push(board[selectedSquare][0], top, players[j]);
+                push(board, players[j], selectedSquare, 0);
                 board[selectedSquare][0].numTokens++;
             }
 

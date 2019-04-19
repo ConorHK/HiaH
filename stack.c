@@ -4,25 +4,29 @@
  * Created Date: Friday April 19th 2019 4:06:31 pm
  * Author: ConorHK
  * -----
- * Description:
+ * Description: contains push and pop functions to add/remove tokens to any position on the board.
  */
 
 #include "stack.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-token * push(square board[NUM_ROWS][NUM_COLUMNS], token *top, player play){
-    token *curr = top;
-    top = malloc(sizeof(token));
-    top->col = play.col; //exchange value
-    top->nextPtr = curr;
-    return top;
+//push function that places a token on any position on the board, on top of the previous token.
+token * push(square board[NUM_ROWS][NUM_COLUMNS], player play, int row, int column){
+    token *curr = board[row][column].stack;
+    board[row][column].stack = malloc(sizeof(token));
+    board[row][column].stack->col = play.col;
+    board[row][column].stack->nextPtr = curr;
+    return board[row][column].stack;
 }
 
-token * pop(square board[NUM_ROWS][NUM_COLUMNS], token *top){
-    token *curr = top;
+//pop function that takes the topmost token off any position on the board.
+token * pop(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
+    token *curr = board[row][column].stack;
     if(curr != NULL){
-        top = curr->nextPtr;
+        board[row][column].stack = curr->nextPtr;
         printf("Stack Data: %d\n", curr->col);
         free(curr);
     }
-    return top;
+    return board[row][column].stack;
 }
