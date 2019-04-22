@@ -177,7 +177,6 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         {
             moveVertical(board, players[i], dieRoll);
             dieRoll = rollDie();
-            // moveVertical(board, players[i], dieRoll);
             // moveHorizontal(board, players[i], dieRoll);
             // win = winCheck(players[i]);
         }
@@ -221,7 +220,7 @@ reChoose:
         printf("\tColumn: ");
         scanf("%d", &colChoice);
         colChoice--;
-        if((board[rowChoice][colChoice].stack == NULL)){
+        if((board[rowChoice][colChoice].stack == NULL) || board[rowChoice][colChoice].stack->col != currentPlayer.col){
             printf("\nERROR: You do not have a token on that space!\n\n");
             goto reChoose;
         }
