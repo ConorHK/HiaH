@@ -6,6 +6,11 @@
  * -----
  * Description: File responsible for initialzing the game.
  */
+
+#include <stdbool.h>
+
+char print_token(token t);
+
 /*
  * Prints the board
  * 
@@ -42,7 +47,7 @@ int rollDie();
  *        current player - the player who's turn it is
  *        dieRoll - the number rolled on the die
  */
-void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
 
 /*
  * Gives the player the option to move a specified token up or down.
@@ -61,5 +66,3 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, i
  *          false: if the player hasn't 3 tokens in the final column
  */
 bool winCheck(player currentPlayer);
-
-void delay(int number_of_seconds);

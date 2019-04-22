@@ -9,12 +9,12 @@
 
 #include "game_init.h"
 #include "game_logic.h"
-// #include "game_logic.h"
 
 int main(int argc, char **argv)
 {
 
     //the board is defined as a 2-Dimensional array of squares
+    
     square board[NUM_ROWS][NUM_COLUMNS];
 
     //an array containing the players (MAX 6 players)
@@ -32,11 +32,13 @@ int main(int argc, char **argv)
     //creates the players
     numPlayers = initialize_players(players);
 
-    print_board(board);
-
     //asks each player to place their tokens
     //on the first column of the board
     place_tokens(board, players, numPlayers);
+
+    for(int i=0; i<4; i++){
+        printf("%d\n", board[0][0].stack[i].col);
+    }
 
     //manages the turns of the game and identifies a winner
     play_game(board, players, numPlayers);
