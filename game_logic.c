@@ -220,8 +220,18 @@ reChoose:
         printf("\tColumn: ");
         scanf("%d", &colChoice);
         colChoice--;
+
+        if(colChoice < 0 || colChoice > 8 || rowChoice < 0 || rowChoice > 5){
+            printf("\nERROR: Invalid choice.\n\n");
+            delay(1);
+            print_board(board);
+            goto reChoose;
+        }
+
         if((board[rowChoice][colChoice].stack == NULL) || board[rowChoice][colChoice].stack->col != currentPlayer.col){
             printf("\nERROR: You do not have a token on that space!\n\n");
+            delay(1);
+            print_board(board);
             goto reChoose;
         }
         if (board[rowChoice][colChoice].stack->col == currentPlayer.col)
