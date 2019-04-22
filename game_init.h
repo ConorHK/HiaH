@@ -31,11 +31,17 @@ enum color
     EMPTY
 };
 
+enum ttype{
+    FREE,
+    BLOCKED
+};
+
 //defines a token.
 //Note each token can be associated with a color
 typedef struct token
 {
     enum color col;
+    enum ttype type;
     struct token *nextPtr;
 } token;
 

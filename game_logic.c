@@ -124,7 +124,9 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             contain a token of the same color selected by the player */
             if ((board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col))
             {
+                // board[selectedSquare][0].stack->type = 0;
                 push(board, players[j], selectedSquare, 0);
+                board[selectedSquare][0].stack->type = 0;
                 board[selectedSquare][0].numTokens++;
             }
 
