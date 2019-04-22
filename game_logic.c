@@ -126,6 +126,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                 board[selectedSquare][0].stack->col = players[j].col;
                 board[selectedSquare][0].numTokens++;*/
                 push(board, players[j], selectedSquare, 0);
+                board[selectedSquare][0].stack->type = 0;
                 board[selectedSquare][0].numTokens++;
             }
 
@@ -174,9 +175,9 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         for(int i=0; i < numPlayers; i++)
         {
            dieRoll = rollDie();
-          // moveVertical(board, players[i], dieRoll);
-          // moveHorizontal(board, players[i], dieRoll);
-          // win = winCheck(players[i]);
+            moveVertical(board, players[i], dieRoll);
+            moveHorizontal(board, players[i], dieRoll);
+            win = winCheck(players[i]);
         }
         win = true;
     }
@@ -195,7 +196,8 @@ int rollDie(){
 }
 
 void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
-    /*int choice;
+    int choice;
+    int rowChoice, colChoice, moveChoice;
 
     reChoose:
     printf("Would you like to move one of your tokens up/down?\n");
@@ -205,34 +207,36 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
     scanf("%d", &choice);
     switch(choice){
         case 1:
-            int rowChoice, colChoice, moveChoice;
             printf("Please select a token: \n");
             printf("\tRow: ");
             scanf("%d", &rowChoice);
             printf("\tColumn: ");
             scanf("%d", &colChoice);
-
             if(board[rowChoice][colChoice].stack->col == currentPlayer.col){
-                upOrDown:
-                printf("\nWould you like to move the token up or down?\n");
-                printf("\t1: Up\n");
-                printf("\t: Down\n");
-                scanf("%d", &moveChoice);
+                if(!obstacleCheck(board, rowChoice, colChoice)){
+                    upOrDown:
+                    printf("\nWould you like to move the token up or down?\n");
+                    printf("\t1: Up\n");
+                    printf("\t: Down\n");
+                    scanf("%d", &moveChoice);
 
-                switch(moveChoice){
-                    case 1:
+                    switch(moveChoice){
+                        case 1:
 
-                            break;
-                    case 2:
-                            break;
-                    default:
-                            printf("\nERROR: Invalid input.\n");
-                            delay(1);
-                            goto upOrDown;
-                            break;
+                                break;
+                        case 2:
+                                break;
+                        default:
+                                printf("\nERROR: Invalid input.\n");
+                                delay(1);
+                                goto upOrDown;
+                                break;
+                    }
                 }
+            } else {
+                goto reChoose;
             }
-
+            
             break;
         case 2:
             break;
@@ -244,7 +248,7 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
             break;
     }
 
-*/
+
 }
 
 void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
@@ -253,6 +257,18 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, i
 
 bool winCheck(player currentPlayer){
 
+}
+
+bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
+    if(board[row][column].type == OBSTACLE){//Is the token on an obstacle square
+        if(board[row][column+1].numTokens > 0 || board[row][column-1].numTokens > 0){//Are there tokens on either side of the obstacle square
+            return false;
+        } else {
+            return true;
+            printf("Your token is stuck on an obstacle!");
+        } 
+    }
+    return false;
 }
 
 void delay(int number_of_seconds) 

@@ -62,4 +62,6 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, i
  */
 bool winCheck(player currentPlayer);
 
+bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
+
 void delay(int number_of_seconds);

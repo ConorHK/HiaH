@@ -1,3 +1,4 @@
+
 /*
  * File: c:\Users\Conor\Documents\C\Semester 2\SoftwareEngineering\Hedgehogs in a Hurry\stack.c
  * Project: c:\Users\Conor\Documents\C\Semester 2\SoftwareEngineering\Hedgehogs in a Hurry
@@ -17,6 +18,7 @@ token * push(square board[NUM_ROWS][NUM_COLUMNS], player play, int row, int colu
     board[row][column].stack = malloc(sizeof(token));
     board[row][column].stack->col = play.col;
     board[row][column].stack->nextPtr = curr;
+    board[row][column].numTokens++;
     return board[row][column].stack;
 }
 
@@ -28,5 +30,6 @@ token * pop(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
         printf("Stack Data: %d\n", curr->col);
         free(curr);
     }
+    board[row][column].numTokens--;
     return board[row][column].stack;
 }
