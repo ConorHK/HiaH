@@ -16,9 +16,6 @@
 
 void printLine();
 
-token *top = NULL;
-token *curr = NULL;
-
 /*
  * Returns the first letter associated with the color of the token
  * 
@@ -112,6 +109,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             printf("Player %d, please enter a square: ", j + 1);
             scanf("%d", &selectedSquare);
             selectedSquare--;
+            printf("\n");
 
             //Check to see if input is valid.
             if (selectedSquare < 0 || selectedSquare > 5)
@@ -203,23 +201,26 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
     int choice, rowChoice, colChoice, moveChoice;
 
 reChoose:
+    printLine();
     printf("\n%s", currentPlayer.name);
     printf("Would you like to move one of your tokens up/down?\n");
-    printf("\t1: Yes\n");
-    printf("\t2: No\n");
+    printf("1: Yes\n");
+    printf("2: No\n");
     printf("\nEnter choice: ");
     scanf("%d", &choice);
+    printLine();
     
     switch (choice)
     {
     case 1:
         printf("Please select a token: \n");
-        printf("\tRow: ");
+        printf("Row: ");
         scanf("%d", &rowChoice);
         rowChoice--;
-        printf("\tColumn: ");
+        printf("Column: ");
         scanf("%d", &colChoice);
         colChoice--;
+        printLine();
 
         if(colChoice < 0 || colChoice > 8 || rowChoice < 0 || rowChoice > 5){
             printf("\nERROR: Invalid choice.\n\n");
@@ -237,11 +238,27 @@ reChoose:
         if (board[rowChoice][colChoice].stack->col == currentPlayer.col)
         {
         upOrDown:
-            printf("\nWould you like to move the token up or down?\n");
-            printf("\t1: Up\n");
-            printf("\t2: Down\n");
-            printf("\nEnter choice: ");
-            scanf("%d", &moveChoice);
+            if(!(rowChoice == 0 || rowChoice == 5)){    
+                printf("\nWould you like to move the token up or down?\n");
+                printf("1: Up\n");
+                printf("2: Down\n");
+                printf("\nEnter choice: ");
+                scanf("%d", &moveChoice);
+                printLine();
+                delay(0.5);
+            }
+            else if(rowChoice == 0){
+                printf("\nMoving token down.\n");
+                printLine();
+                delay(0.5);
+                moveChoice = 2;
+            }
+            else if(rowChoice == 5){
+               printf("\nMoving token up.\n");
+               delay(0.5);
+               printLine();
+               moveChoice = 1;    
+            }
 
             switch (moveChoice)
             {
