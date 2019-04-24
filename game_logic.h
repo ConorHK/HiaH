@@ -64,4 +64,4 @@ bool winCheck(player currentPlayer);
 
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
 
-void delay(int number_of_seconds);
+void delay(float number_of_seconds);
