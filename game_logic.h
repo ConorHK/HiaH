@@ -52,7 +52,7 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
  *        dieRoll - the number rolled on the die
  * 
  */
-void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int dieRoll);
 
 /*
  * Checks to see if the current player has 3 of their tokens in the final column
@@ -61,5 +61,7 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, i
  *          false: if the player hasn't 3 tokens in the final column
  */
 bool winCheck(player currentPlayer);
+
+bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
 
 void delay(float number_of_seconds);
