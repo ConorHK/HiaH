@@ -33,3 +33,8 @@ token * pop(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
     board[row][column].numTokens--;
     return board[row][column].stack;
 }
+
+void moveToken(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int orow, int ocol, int drow, int dcol){
+    pop(board, orow, ocol);
+    push(board, currentPlayer, drow, dcol);
+}
