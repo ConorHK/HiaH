@@ -9,7 +9,7 @@
 #include "game_init.h"
 
 //push function prototype.
-token * push(square board[NUM_ROWS][NUM_COLUMNS], player play, int row, int column);
+token * push(square board[NUM_ROWS][NUM_COLUMNS], int color, int row, int column);
 
 //pop function prototype.
 token * pop(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
