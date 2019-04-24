@@ -10,7 +10,6 @@
 #include "game_init.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 /*
  * This function creates the board for the first time
@@ -35,10 +34,7 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS])
                 //creates a normal square otherwise
                 board[i][j].type = NORMAL;
             }
-            //Allocates 4 token spaces in memory to each square on the board to hold data on the stacks
-            board[i][j].stack = (token *) malloc(sizeof(token)*4);
-
-            board[i][j].stack[0].col = EMPTY;
+            board[i][j].stack = NULL;
 
             //**Initializes each square to 0 tokens.
             board[i][j].numTokens = 0;

@@ -1,16 +1,16 @@
 
 /*
- * File: c:\Users\Conor\Documents\C\Semester 2\SoftwareEngineering\Hedgehogs in a Hurry\stack.h
+ * File: c:\Users\Conor\Documents\C\Semester 2\SoftwareEngineering\Hedgehogs in a Hurry\stack.c
  * Project: c:\Users\Conor\Documents\C\Semester 2\SoftwareEngineering\Hedgehogs in a Hurry
- * Created Date: Friday April 12th 2019 12:47:25 pm
- * Author: ConorHK, thomasreilly
+ * Created Date: Friday April 19th 2019 4:06:31 pm
+ * Author: ConorHK
  * -----
- * Description: library for stack functions push pop.
+ * Description: contains push and pop functions to add/remove tokens to any position on the board.
  */
-#include "game_init.h"
-#include "game_logic.h"
-#include <stdio.h>
+
+#include "stack.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 //push function that places a token on any position on the board, on top of the previous token.
 token * push(square board[NUM_ROWS][NUM_COLUMNS], player play, int row, int column){
