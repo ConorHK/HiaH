@@ -172,10 +172,9 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         //Each loop represents each players go.
         for (int i = 0; i < numPlayers; i++)
         {
-            
-            moveVertical(board, players[i]);
             dieRoll = rollDie();
-            //moveHorizontal(board, players, dieRoll);
+            moveVertical(board, players[i]);
+            moveHorizontal(board, players, dieRoll);
             //win = winCheck(players[i]);
         }
         win = true;
@@ -266,6 +265,24 @@ reChoose:
                 printLine();
                 moveChoice = 1;
             }
+
+            switch (moveChoice)
+            {
+            case 1:
+                push(board, board[rowChoice][colChoice].stack->col, (rowChoice - 1), colChoice);
+                pop(board, rowChoice, colChoice);
+                break;
+            case 2:
+                push(board, board[rowChoice][colChoice].stack->col, (rowChoice + 1), colChoice);
+                pop(board, rowChoice, colChoice);
+                break;
+            default:
+                printf("\nERROR: Invalid input.\n");
+                delay(1);
+                goto upOrDown;
+                break;
+            }
+            print_board(board);
             break;
         case 2:
             break;
@@ -283,10 +300,11 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
 {
     int tokens = 0, column = 0;
     int choice;
-    for (int i = 0; i < NUM_COLUMNS; i++)
+
+    /*for (int i = 0; i < NUM_COLUMNS; i++)
     {
         printf("%d ", board[dieRoll - 1][i].numTokens);
-    }
+    }*/
     for (int i = 0; i < NUM_COLUMNS; i++)
     {
         if (board[dieRoll - 1][i].numTokens > 0)

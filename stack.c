@@ -27,7 +27,6 @@ token * pop(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
     token *curr = board[row][column].stack;
     if(curr != NULL){
         board[row][column].stack = curr->nextPtr;
-        printf("Stack Data: %d\n", curr->col);
         free(curr);
         board[row][column].numTokens--;
     }
