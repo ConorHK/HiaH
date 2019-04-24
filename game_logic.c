@@ -128,7 +128,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             contain a token of the same color selected by the player */
             if ((board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col))
             {
-                push(board, players[j], selectedSquare, 0);
+                push(board, players[j].col, selectedSquare, 0);
             }
 
             else
@@ -181,7 +181,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         {
            dieRoll = rollDie();
             moveVertical(board, players[i], dieRoll);
-            moveHorizontal(board, players[i], dieRoll);
+            moveHorizontal(board, players, dieRoll);
             win = winCheck(players[i]);
         }
         win = true;
@@ -256,8 +256,48 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
 
 }
 
-void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll){
+void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int dieRoll){
+    int tokens = 0, column = 0;
+    int choice;
+    for(int i=0; i < NUM_COLUMNS; i++){
+        printf("%d ", board[dieRoll-1][i].numTokens);
+    }
+    for(int i=0; i < NUM_COLUMNS; i++){
+        if(board[dieRoll-1][i].numTokens > 0){
+            tokens++;
+            column = i;
+        }
+    }
 
+    if(tokens > 1){
+    choice:
+        printf("\n%d token stack(s) on row %d to choose from! Which column would you like to move from?\n", tokens, dieRoll);
+        scanf("%d", choice);
+        choice--;
+        if(choice < 1 || choice > 6){
+            printf("Invalid Input!");
+            goto choice;
+        }
+        if(board[dieRoll-1][choice].numTokens == 0){
+            printf("There are no tokens on this tile!");
+            goto choice;
+        }
+        
+        push(board, board[dieRoll-1][choice].stack->col, dieRoll-1, choice+1);
+        pop(board, dieRoll-1, choice);//Remove token from chosen tile
+
+    } else if(tokens == 0){
+        printf("There are no tokens on this row!\n");
+
+    } else {
+        printf("Moving the token on column %d forward!\n", column);
+
+
+        push(board, board[dieRoll-1][choice].stack->col, dieRoll-1, column+1);
+        pop(board, dieRoll-1, column);
+    }
+    print_board(board);
+    delay(3);
 }
 
 bool winCheck(player currentPlayer){
