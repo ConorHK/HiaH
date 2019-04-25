@@ -10,6 +10,7 @@
 #include "game_init.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 /*
  * This function creates the board for the first time
@@ -66,6 +67,7 @@ int initialize_players(player players[])
         //Collecting player names.
         printf("\nPlease enter player name: ");
         fgets(players[i].name, 50, stdin);
+        strtok(players[i].name, "\n");
         playerCount++;
 
         //Check to see if a newline is entered. If so, loop is broken.
@@ -95,10 +97,10 @@ int initialize_players(player players[])
 void colorSelection(player players[], bool flag[], int playerNumb)
 {
     int colourChoice;
-    char *colours[6] = {"RED", "BLU", "GREEN", "YELLOW", "PINK", "ORANGE"};
+    char *colours[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
 
 reChoose:
-    printf("\nPlayer %d: %sPlease select a colour from the list below:\n", playerNumb + 1, players[playerNumb].name);
+    printf("\nPlayer %d: %s\nPlease select a colour from the list below:\n", playerNumb + 1, players[playerNumb].name);
     for (size_t i = 0; i < 6; i++)
     {
         if (flag[i] != true)
@@ -110,8 +112,9 @@ reChoose:
             printf("\t   TAKEN\n");
         }
     }
+    printf("\nEnter choice: ");
     scanf("%d", &colourChoice);
-    if (flag[colourChoice-1] == true)
+    if (flag[colourChoice - 1] == true)
     {
         printf("\nERROR: Colour already taken.\n");
         goto reChoose;

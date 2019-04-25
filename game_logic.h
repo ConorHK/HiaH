@@ -2,58 +2,66 @@
  * File: game_logic.h
  * Project: f:\Documents\C\Semester 2\Hedgehogs in a Hurry\
  * Created Date: Saturday March 9th 2019 4:44:25 pm
- * Author: ConorHK, thomasreilly1011 (based on template by lpasquale) 
+ * Author: ConorHK, thomasreilly1011 (based on template by lpasquale)
  * -----
  * Description: File responsible for initialzing the game.
  */
-
 /*
  * Prints the board
- * 
- * Input: the board to be printed. 
+ *
+ * Input: the board to be printed.
  */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]);
 
 /*
  * Place tokens in the first column of the board
- * 
+ *
  * Input: board - a 6x9 array of squares that represents the board
  *        players - the array of the players
- *        numPlayers - the number of players  
+ *        numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers);
 
-/* 
+/*
  *  * Manages the logic of the game
- * 
+ *
  * Input: board - a 6x9 array of squares that represents the board
  *        players - the array of the players
- *        numPlayers - the number of players 
+ *        numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers);
 
 /*
- * Gives the user the option to move their token up or down.
- * 
- * Input: board - a 6x9 array of squares that represents the board
- *        player - the whos go it is.
- *        dieRoll - The current number on the die.
+ * Returns a random number between 1 and 6.
  */
-void moveVerticle(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+int rollDie();
+/*
+ * Gives the player the option to move a specified token up or down.
+ *
+ * Input: board - a 6x9 array of squares that represents the board
+ *        current player - the player who's turn it is
+ *        dieRoll - the number rolled on the die
+ */
+void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer);
 
 /*
- * Gives the user the option to move their token across the board.
- * 
+ * Gives the player the option to move a specified token up or down.
+ *
  * Input: board - a 6x9 array of squares that represents the board
- *        currentPlayer - the whos go it is.
- *        dieRoll - The current number on the die.
+ *        currentPlayer - the player who's turn it is
+ *        dieRoll - the number rolled on the die
+ *
  */
-void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int dieRoll);
+void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int dieRoll);
 
 /*
- * Checks to see if the current user has 3 of their tokens in the final column to win the game.
- * 
- * Input: currentPlayer - the whos go it is.
+ * Checks to see if the current player has 3 of their tokens in the final column
+ *
+ *  Output: true: if the player has 3 tokens in the final column
+ *          false: if the player hasn't 3 tokens in the final column
  */
+bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *currentPlayer);
 
-bool winCheck(player currentPlayer);
+bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
+
+void delay(float number_of_seconds);
