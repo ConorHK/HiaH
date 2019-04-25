@@ -298,8 +298,6 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
     int tokens = 0, column = 0;
     int choice;
     bool obstacle = false;
-    dieRoll = 2;
-    obstacleTest(board);
 
     for (int i = 0; i < NUM_COLUMNS; i++)
     {
