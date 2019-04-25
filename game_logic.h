@@ -60,8 +60,10 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
  *  Output: true: if the player has 3 tokens in the final column
  *          false: if the player hasn't 3 tokens in the final column
  */
-bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *currentPlayer);
+bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6]);
 
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
 
 void delay(float number_of_seconds);
+
+void test(square board[NUM_ROWS][NUM_COLUMNS]);

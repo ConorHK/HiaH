@@ -174,10 +174,11 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         //Each loop represents each players go.
         for (int i = 0; i < numPlayers; i++)
         {
+            test(board);
             dieRoll = rollDie();
             moveVertical(board, players[i]);
             moveHorizontal(board, players, dieRoll);
-            win = winCheck(board, &players[i]);
+            win = winCheck(board, &players);
             if (win == true)
             {
                 break;
@@ -368,24 +369,32 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
     delay(0.5);
 }
 
-bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *currentPlayer)
+bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
 {
-    for (size_t i = 0; i < 6; i++)
-    {
-        if ((board[i][8].stack != NULL) && (currentPlayer->col == board[i][8].stack->col))
+    for (size_t j = 0; j < 6; j++)
+    {//Cycles through players
+        for (size_t i = 0; i < 6; i++)
+        {//Cycles through rows
+            if ((board[i][8].stack != NULL) && (players[j]->col == board[i][8].stack->col))
+            {
+                players[j]->numTokensLastCol++;
+                pop(board, i, 8);
+                if(players[j]->numTokensLastCol < 3){
+                    printf("%s: Your token is home! %d more tokens needed to win.\n\n", players[j]->name, 3 - players[j]->numTokensLastCol);
+                }
+            }
+        }
+        if (players[j]->numTokensLastCol >= 3)
         {
-            currentPlayer->numTokensLastCol++;
+            printf("\n\n%s is the winner!\n", *players[j]->name);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
-    if (currentPlayer->numTokensLastCol >= 3)
-    {
-        printf("\n\n%s is the winner!\n", currentPlayer->name);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    
 }
 
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column)
@@ -415,4 +424,19 @@ void delay(float number_of_seconds)
 
     // looping till required time is not achieved
     while (clock() < start_time + (int)milli_seconds);
+}
+
+void test(square board[NUM_ROWS][NUM_COLUMNS]){
+    int choice;
+    int or, oc, dr, dc, col;
+
+    printf("Would you like to place a token?\n1: Yes\n2: No\n");
+    scanf("%d", &choice);
+
+    if(choice == 1){
+        printf("Enter the destination row & column in the format, and then the color of the token (dr dc col)\n");
+        scanf("%d %d %d", &dr, &dc, &col);
+        push(board, col, dr-1, dc-1);
+    }
+    
 }
