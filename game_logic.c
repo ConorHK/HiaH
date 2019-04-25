@@ -14,7 +14,6 @@
 #include <stdbool.h>
 #include <time.h>
 
-
 void printLine();
 
 /*
@@ -179,7 +178,8 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
             moveVertical(board, players[i]);
             moveHorizontal(board, players, dieRoll);
             win = winCheck(board, &players[i]);
-            if(win == true){
+            if (win == true)
+            {
                 break;
             }
         }
@@ -211,7 +211,6 @@ reChoose:
     printf("2: No\n");
     printf("\nEnter choice: ");
     scanf("%d", &choice);
-
 
     switch (choice)
     {
@@ -328,15 +327,18 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
             printf("\nThere are no tokens on this tile!\n");
             goto rchoice;
         }
-    	else{
+        else
+        {
             obstacle = obstacleCheck(board, (dieRoll - 1), choice);
-            if(obstacle == false){
-                printf("\nMoving the token on column %d forward!\n", choice+1);
+            if (obstacle == false)
+            {
+                printf("\nMoving the token on column %d forward!\n", choice + 1);
                 push(board, board[dieRoll - 1][choice].stack->col, (dieRoll - 1), (choice + 1));
                 pop(board, (dieRoll - 1), choice); //Remove token from chosen tile
                 printLine();
             }
-            else{
+            else
+            {
                 goto rchoice;
             }
         }
@@ -348,13 +350,15 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
     else
     {
         obstacle = obstacleCheck(board, (dieRoll - 1), column);
-        if(column != 8 && obstacle == false){
-            printf("\nMoving the token on column %d forward!\n", column+1);
+        if (column != 8 && obstacle == false)
+        {
+            printf("\nMoving the token on column %d forward!\n", column + 1);
             push(board, board[dieRoll - 1][column].stack->col, dieRoll - 1, column + 1);
             pop(board, dieRoll - 1, column);
             printLine();
         }
-        else{
+        else
+        {
             printf("\nNo tokens available to move.\n");
         }
     }
@@ -365,17 +369,22 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
 
 bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *currentPlayer)
 {
-    for(size_t i = 0; i < 6; i++){
+    for (size_t i = 0; i < 6; i++)
+    {
         // printf("\ncurrentPlayer.col = %d\t board col = %d\n", currentPlayer.col, board[i][8].stack->col);
-        if( (board[i][8].stack != NULL) && (currentPlayer->col == board[i][8].stack->col) ){;
+        if ((board[i][8].stack != NULL) && (currentPlayer->col == board[i][8].stack->col))
+        {
+            ;
             currentPlayer->numTokensLastCol++;
         }
     }
-    if(currentPlayer->numTokensLastCol >= 3){
+    if (currentPlayer->numTokensLastCol >= 3)
+    {
         printf("\n\n%s is the winner!\n", currentPlayer->name);
         return true;
     }
-    else{
+    else
+    {
         return false;
     }
 }
@@ -405,6 +414,5 @@ void delay(float number_of_seconds)
     clock_t start_time = clock();
 
     // looping till required time is not achieved
-    while (clock() < start_time + (int)milli_seconds)
-        ;
+    while (clock() < start_time + (int)milli_seconds);
 }

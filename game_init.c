@@ -114,7 +114,7 @@ reChoose:
     }
     printf("\nEnter choice: ");
     scanf("%d", &colourChoice);
-    if (flag[colourChoice-1] == true)
+    if (flag[colourChoice - 1] == true)
     {
         printf("\nERROR: Colour already taken.\n");
         goto reChoose;
