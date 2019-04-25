@@ -230,6 +230,9 @@ reChoose:
             print_board(board);
             goto reChoose;
         }
+        if(obstacleCheck(board, rowChoice, colChoice) == true){
+            goto reChoose;
+        }
 
         if ((board[rowChoice][colChoice].stack == NULL) || board[rowChoice][colChoice].stack->col != currentPlayer.col)
         {
