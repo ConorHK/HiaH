@@ -16,9 +16,6 @@
 
 void printLine();
 
-token *top = NULL;
-token *curr = NULL;
-
 /*
  * Returns the first letter associated with the color of the token
  * 
@@ -189,13 +186,14 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 int rollDie(){
     srand(time(NULL));
-    int dieRoll = rand()%6 + 1;
-    printf("Die rolling");
-    delay(1);
+    int dieRoll = rand() % 6 + 1;
+    printf("\nDie rolling");
+    delay(0.5);
     printf(".");
-    delay(1);
+    delay(0.5);
     printf(".");
-    printf(" %d!\n", dieRoll);
+    printf(" %d!\n\n", dieRoll);
+    delay(1);
     return dieRoll;
 }
 
@@ -203,26 +201,67 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer, int
     int choice;
     int rowChoice, colChoice, moveChoice;
 
-    reChoose:
-    printf("Would you like to move one of your tokens up/down?\n");
-    printf("\t1: Yes\n");
-    printf("\t2: No\n");
 
+reChoose:
+    printLine();
+    printf("\n%s", currentPlayer.name);
+    printf("Would you like to move one of your tokens up/down?\n");
+    printf("1: Yes\n");
+    printf("2: No\n");
+    printf("\nEnter choice: ");
     scanf("%d", &choice);
-    switch(choice){
-        case 1:
-            printf("Please select a token: \n");
-            printf("\tRow: ");
-            scanf("%d", &rowChoice);
-            printf("\tColumn: ");
-            scanf("%d", &colChoice);
-            if(board[rowChoice][colChoice].stack->col == currentPlayer.col){
-                if(!obstacleCheck(board, rowChoice, colChoice)){
-                    upOrDown:
-                    printf("\nWould you like to move the token up or down?\n");
-                    printf("\t1: Up\n");
-                    printf("\t: Down\n");
-                    scanf("%d", &moveChoice);
+
+    printLine();
+    
+    switch (choice)
+    {
+    case 1:
+        printf("Please select a token: \n");
+        printf("Row: ");
+        scanf("%d", &rowChoice);
+        rowChoice--;
+        printf("Column: ");
+        scanf("%d", &colChoice);
+        colChoice--;
+        printLine();
+
+        if(colChoice < 0 || colChoice > 8 || rowChoice < 0 || rowChoice > 5){
+            printf("\nERROR: Invalid choice.\n\n");
+            delay(1);
+            print_board(board);
+            goto reChoose;
+        }
+
+        if((board[rowChoice][colChoice].stack == NULL) || board[rowChoice][colChoice].stack->col != currentPlayer.col){
+            printf("\nERROR: You do not have a token on that space!\n\n");
+            delay(1);
+            print_board(board);
+            goto reChoose;
+        }
+        if (board[rowChoice][colChoice].stack->col == currentPlayer.col)
+        {
+        upOrDown:
+            if(!(rowChoice == 0 || rowChoice == 5)){    
+                printf("\nWould you like to move the token up or down?\n");
+                printf("1: Up\n");
+                printf("2: Down\n");
+                printf("\nEnter choice: ");
+                scanf("%d", &moveChoice);
+                printLine();
+                delay(0.5);
+            }
+            else if(rowChoice == 0){
+                printf("\nMoving token down.\n");
+                printLine();
+                delay(0.5);
+                moveChoice = 2;
+            }
+            else if(rowChoice == 5){
+               printf("\nMoving token up.\n");
+               delay(0.5);
+               printLine();
+               moveChoice = 1;    
+            }
 
                     switch(moveChoice){
                         case 1:
@@ -295,6 +334,7 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
         push(board, board[dieRoll-1][choice].stack->col, dieRoll-1, column+1);
         pop(board, dieRoll-1, column);
     }
+    printf("\n");
     print_board(board);
     delay(1);
 }
@@ -302,6 +342,7 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
 bool winCheck(player currentPlayer){
     return false; //temp
 }
+
 
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
     if(board[row][column].type == OBSTACLE){//Is the token on an obstacle square
@@ -314,16 +355,14 @@ bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
     }
     return false;
 }
+void delay(float number_of_seconds)
+{
+    // Converting time into milliseconds
+    float milli_seconds = 1000 * number_of_seconds;
 
-void delay(int number_of_seconds) 
-{ 
-    // Converting time into milli_seconds 
-    int milli_seconds = 1000 * number_of_seconds; 
-  
-    // Stroing start time 
-    clock_t start_time = clock(); 
-  
-    // looping till required time is not acheived 
-    while (clock() < start_time + milli_seconds) 
-        ; 
-} 
+    //Starting the timer
+    clock_t start_time = clock();
+
+    // looping till required time is not achieved
+    while (clock() < start_time + (int)milli_seconds);
+}

@@ -110,6 +110,7 @@ reChoose:
             printf("\t   TAKEN\n");
         }
     }
+    printf("\nEnter choice: ");
     scanf("%d", &colourChoice);
     if (flag[colourChoice-1] == true)
     {
