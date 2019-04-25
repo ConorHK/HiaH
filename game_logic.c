@@ -369,10 +369,8 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *currentPlayer)
 {
     for (size_t i = 0; i < 6; i++)
     {
-        // printf("\ncurrentPlayer.col = %d\t board col = %d\n", currentPlayer.col, board[i][8].stack->col);
         if ((board[i][8].stack != NULL) && (currentPlayer->col == board[i][8].stack->col))
         {
-            ;
             currentPlayer->numTokensLastCol++;
         }
     }
@@ -403,6 +401,7 @@ bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column)
     }
     return false;
 }
+
 void delay(float number_of_seconds)
 {
     // Converting time into milliseconds
