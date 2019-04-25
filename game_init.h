@@ -50,33 +50,40 @@ typedef struct square
     int numTokens;
 } square;
 
-/*
- * You need to fill this data structure
- * with the information about the player
- * such as a name and a color.
- */
+//Defines a player.
 typedef struct player
 {
+    //String to store their name.
     char name[50];
+    
+    //Colour of their tokens.
     enum color col;
+    
+    //Number of tokens in the last column (a.k.a points).
     int numTokensLastCol;
 } player;
 
 /*
- * This function creates the board for the first time
+ * This function creates the board for the first time.
  * 
- * Input: board - a 6x9 array of squares
+ * Input: board - a 6x9 array of squares.
  *
  */
 void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]);
 
 /*
- * This function creates players for the first time
+ * This function creates players for the first time.
  * 
- * Input: the array of players to be initialized
- * Output: The number of players of the game
+ * Input: the array of players to be initialized.
+ * Output: The number of players of the game.
  *
  */
 int initialize_players(player players[]);
 
+/*
+ * This function lets the players select a colour token to play as.
+ * 
+ * Input: player array, flag array, number of players.
+ *
+ */
 void colorSelection(player players[], bool flag[], int playerNumb);

@@ -94,79 +94,105 @@ int initialize_players(player players[])
     return playerCount;
 }
 
+//Function that lets users select a colour.
 void colorSelection(player players[], bool flag[], int playerNumb)
 {
+    //Declaring variables to store the user's colour choice and each of the options.
     int colourChoice;
     char *colours[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
 
-reChoose:
-    printf("\nPlayer %d: %s\nPlease select a colour from the list below:\n", playerNumb + 1, players[playerNumb].name);
-    for (size_t i = 0; i < 6; i++)
+    //Declaring variables for loop break.
+    int loopBreak = 0;
+    bool loopFlag = false;
+
+    //Loop for error check.
+    while (loopBreak == 0)
     {
-        if (flag[i] != true)
+        //Resetting loopFlag to false after previous loop.
+        loopFlag = false;
+        
+        //Displaying available colours for user to choose from and stores their input.
+        printf("\nPlayer %d: %s\nPlease select a colour from the list below:\n", playerNumb + 1, players[playerNumb].name);
+        for (size_t i = 0; i < 6; i++)
         {
-            printf("\t%d: %s\n", i + 1, colours[i]);
+            if (flag[i] != true) //if the flag is false then the colour hasn't been taken and its printed in the menu.
+            {
+                printf("\t%d: %s\n", i + 1, colours[i]);
+            }
+            else
+            {
+                printf("\t   TAKEN\n");
+            }
         }
-        else
+        printf("\nEnter choice: ");
+        scanf("%d", &colourChoice);
+        
+        //Validation check to see if the choice is valid.
+        if (flag[colourChoice - 1] == true)
         {
-            printf("\t   TAKEN\n");
-        }
-    }
-    printf("\nEnter choice: ");
-    scanf("%d", &colourChoice);
-    if (flag[colourChoice - 1] == true)
-    {
-        printf("\nERROR: Colour already taken.\n");
-        goto reChoose;
-    }
-    switch (colourChoice)
-    {
-    case 1:
-        if (flag[0] == false)
-        {
-            players[playerNumb].col = RED;
-            flag[0] = true;
-            break;
-        }
-
-    case 2:
-        if (flag[1] == false)
-        {
-            players[playerNumb].col = BLU;
-            flag[1] = true;
-            break;
+            printf("\nERROR: Colour already taken.\n");
+            loopFlag = true;
         }
 
-    case 3:
-        if (flag[2] == false)
+        //If so, then the colour is assigned to the user. There's a case for every possible colour choice.
+        if (loopFlag == false)
         {
-            players[playerNumb].col = GREEN;
-            flag[2] = true;
-            break;
-        }
+            switch (colourChoice)
+            {
+            case 1:
+                if (flag[0] == false)
+                {
+                    players[playerNumb].col = RED;
+                    flag[0] = true;
+                    loopBreak = 1;
+                    break;
+                }
 
-    case 4:
-        if (flag[3] == false)
-        {
-            players[playerNumb].col = YELLOW;
-            flag[3] = true;
-            break;
-        }
+            case 2:
+                if (flag[1] == false)
+                {
+                    players[playerNumb].col = BLU;
+                    flag[1] = true;
+                    loopBreak = 1;
+                    break;
+                }
 
-    case 5:
-        if (flag[4] == false)
-        {
-            players[playerNumb].col = PINK;
-            flag[4] = true;
-            break;
-        }
+            case 3:
+                if (flag[2] == false)
+                {
+                    players[playerNumb].col = GREEN;
+                    flag[2] = true;
+                    loopBreak = 1;
+                    break;
+                }
 
-    case 6:
-        if (flag[5] == false)
-        {
-            players[playerNumb].col = ORANGE;
-            flag[5] = true;
-            break;
+            case 4:
+                if (flag[3] == false)
+                {
+                    players[playerNumb].col = YELLOW;
+                    flag[3] = true;
+                    loopBreak = 1;
+                    break;
+                }
+
+            case 5:
+                if (flag[4] == false)
+                {
+                    players[playerNumb].col = PINK;
+                    flag[4] = true;
+                    loopBreak = 1;
+                    break;
+                }
+
+            case 6:
+                if (flag[5] == false)
+                {
+                    players[playerNumb].col = ORANGE;
+                    flag[5] = true;
+                    loopBreak = 1;
+                    break;
+                }
+            }
         }
     }
 }

@@ -55,15 +55,28 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer);
 void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int dieRoll);
 
 /*
- * Checks to see if the current player has 3 of their tokens in the final column
+ * Checks to see if the current player has 3 of their tokens in the final column.
  *
- *  Output: true: if the player has 3 tokens in the final column
- *          false: if the player hasn't 3 tokens in the final column
+ * Input: board, address of the array of players. 
+ * Output: true: if the player has 3 tokens in the final column.
+ *          false: if the player hasn't 3 tokens in the final column.
  */
 bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6]);
 
+/*
+ * Check to see if the token is on an obstacle.
+ *
+ * Input: board, row and column of the token.
+ * Output: true: if the token is on an obstacle.
+ *          false: if the token is not on an obstacle.
+ */
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
 
+/*
+ * Function that causes a delay.
+ *
+ * Input: number of seconds to delay by.
+ */
 void delay(float number_of_seconds);
 
 void test(square board[NUM_ROWS][NUM_COLUMNS]);

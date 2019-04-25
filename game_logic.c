@@ -101,52 +101,58 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
     int minNumOfTokens = 0;
     int selectedSquare = 0;
 
+    bool loopCheck, loopBreak;
+
     for (size_t i = 0; i < 4; i++)
     {
         for (size_t j = 0; j < numPlayers; j++)
         {
-        step:
-            printf("%s, please enter a square: ", players[j].name);
-            scanf("%d", &selectedSquare);
-            selectedSquare--;
-            printf("\n");
-
-            //Check to see if input is valid.
-            if (selectedSquare < 0 || selectedSquare > 5)
+            loopCheck = true;
+            while (loopCheck == true)
             {
-                puts("Error: Invalid input.");
-                goto step;
-            }
-            /*Verify whether the square selected by the 
+                loopBreak = false;
+                printf("%s, please enter a square: ", players[j].name);
+                scanf("%d", &selectedSquare);
+                selectedSquare--;
+                printf("\n");
+
+                //Check to see if input is valid.
+                if (selectedSquare < 0 || selectedSquare > 5)
+                {
+                    puts("Error: Invalid input.");
+                    loopBreak == true;
+                }
+                /*Verify whether the square selected by the 
             user has the minimum number of tokens and whether it does not 
             contain a token of the same color selected by the player */
-            if ((board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col))
-            {
-                push(board, players[j].col, selectedSquare, 0);
-                printLine();
-                printf("\n");
-            }
-
-            else
-            {
-                puts("Error: Invalid input.");
-                printf("\nValid moves: ");
-                for (size_t m = 0; m < 6; m++)
+                if ((loopBreak == false) && (board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col))
                 {
-                    if ((board[m][0].numTokens == minNumOfTokens) && (board[m][0].stack == NULL || board[m][0].stack->col != players[j].col))
-                    {
-                        printf("%d ", m + 1);
-                    }
+                    push(board, players[j].col, selectedSquare, 0);
+                    printLine();
+                    printf("\n");
+                    loopCheck = false;
                 }
-                printf("\n");
+                else if (loopBreak == false)
+                {
+                    puts("Error: Invalid input.");
+                    printf("\nValid moves: ");
+                    for (size_t m = 0; m < 6; m++)
+                    {
+                        if ((board[m][0].numTokens == minNumOfTokens) && (board[m][0].stack == NULL || board[m][0].stack->col != players[j].col))
+                        {
+                            printf("%d ", m + 1);
+                        }
+                    }
+                    printf("\n");
 
-                goto step;
-            }
+                    loopBreak == true;
+                }
 
-            //Updates the minimum number of tokens.
-            if (((numPlayers * i) + j + 1) % NUM_ROWS == 0)
-            {
-                minNumOfTokens++;
+                //Updates the minimum number of tokens.
+                if ((((numPlayers * i) + j + 1) % NUM_ROWS == 0) && loopBreak == false)
+                {
+                    minNumOfTokens++;
+                }
             }
 
             print_board(board);
@@ -206,93 +212,108 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer)
     int choice;
     int rowChoice, colChoice, moveChoice;
 
-reChoose:
-    printf("\n%s, would you like to move one of your tokens up/down?\n", currentPlayer.name);
-    printf("1: Yes\n");
-    printf("2: No\n");
-    printf("\nEnter choice: ");
-    scanf("%d", &choice);
+    bool loopCheck = true, loopBreak;
+    bool loopUpDownCheck = true;
 
-    switch (choice)
+    while (loopCheck == true)
     {
-    case 1:
-        printf("Please select a token: \n");
-        printf("Row: ");
-        scanf("%d", &rowChoice);
-        rowChoice--;
-        printf("Column: ");
-        scanf("%d", &colChoice);
-        colChoice--;
+        loopBreak = false;
+        printf("\n%s, would you like to move one of your tokens up/down?\n", currentPlayer.name);
+        printf("1: Yes\n");
+        printf("2: No\n");
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
 
-        if (colChoice < 0 || colChoice > 8 || rowChoice < 0 || rowChoice > 5)
+        switch (choice)
         {
-            printf("\nERROR: Invalid choice.\n\n");
-            delay(1);
-            print_board(board);
-            goto reChoose;
-        }
-        if(obstacleCheck(board, rowChoice, colChoice) == true){
-            goto reChoose;
-        }
+        case 1:
+            printf("Please select a token: \n");
+            printf("Row: ");
+            scanf("%d", &rowChoice);
+            rowChoice--;
+            printf("Column: ");
+            scanf("%d", &colChoice);
+            colChoice--;
 
-        if ((board[rowChoice][colChoice].stack == NULL) || board[rowChoice][colChoice].stack->col != currentPlayer.col)
-        {
-            printf("\nERROR: You do not have a token on that space!\n\n");
-            delay(1);
-            print_board(board);
-            goto reChoose;
-        }
-        if (board[rowChoice][colChoice].stack->col == currentPlayer.col)
-        {
-        upOrDown:
-            if (!(rowChoice == 0 || rowChoice == 5))
+            if (colChoice < 0 || colChoice > 8 || rowChoice < 0 || rowChoice > 5)
             {
-                printf("\nWould you like to move the token up or down?\n");
-                printf("1: Up\n");
-                printf("2: Down\n");
-                printf("\nEnter choice: ");
-                scanf("%d", &moveChoice);
-                delay(0.5);
-            }
-            else if (rowChoice == 0)
-            {
-                printf("\nMoving token down.\n");
-                delay(0.5);
-                moveChoice = 2;
-            }
-            else if (rowChoice == 5)
-            {
-                printf("\nMoving token up.\n");
-                delay(0.5);
-                moveChoice = 1;
+                printf("\nERROR: Invalid choice.\n\n");
+                delay(1);
+                print_board(board);
+                loopBreak = true;
             }
 
-            switch (moveChoice)
+            if (obstacleCheck(board, rowChoice, colChoice) == true)
             {
-            case 1:
-                push(board, board[rowChoice][colChoice].stack->col, (rowChoice - 1), colChoice);
-                pop(board, rowChoice, colChoice);
+                loopBreak = true;
+            }
+
+            if ((board[rowChoice][colChoice].stack == NULL) || board[rowChoice][colChoice].stack->col != currentPlayer.col)
+            {
+                printf("\nERROR: You do not have a token on that space!\n\n");
+                delay(1);
+                print_board(board);
+                loopBreak = true;
+            }
+            if ((loopBreak == false) && (board[rowChoice][colChoice].stack->col == currentPlayer.col))
+            {
+                while (loopUpDownCheck == true)
+                {
+                    if (!(rowChoice == 0 || rowChoice == 5))
+                    {
+                        printf("\nWould you like to move the token up or down?\n");
+                        printf("1: Up\n");
+                        printf("2: Down\n");
+                        printf("\nEnter choice: ");
+                        scanf("%d", &moveChoice);
+                        delay(0.5);
+                        loopCheck = false;
+                    }
+                    else if (rowChoice == 0)
+                    {
+                        printf("\nMoving token down.\n");
+                        delay(0.5);
+                        moveChoice = 2;
+                        loopCheck = false;
+                    }
+                    else if (rowChoice == 5)
+                    {
+                        printf("\nMoving token up.\n");
+                        delay(0.5);
+                        moveChoice = 1;
+                        loopCheck = false;
+                    }
+
+                    switch (moveChoice)
+                    {
+                    case 1:
+                        push(board, board[rowChoice][colChoice].stack->col, (rowChoice - 1), colChoice);
+                        pop(board, rowChoice, colChoice);
+                        loopUpDownCheck = false;
+                        break;
+                    case 2:
+                        push(board, board[rowChoice][colChoice].stack->col, (rowChoice + 1), colChoice);
+                        pop(board, rowChoice, colChoice);
+                        loopUpDownCheck = false;
+                        break;
+                    default:
+                        printf("\nERROR: Invalid input.\n");
+                        delay(1);
+                        break;
+                    }
+                }
+                print_board(board);
                 break;
             case 2:
-                push(board, board[rowChoice][colChoice].stack->col, (rowChoice + 1), colChoice);
-                pop(board, rowChoice, colChoice);
+                loopCheck = false;
                 break;
+
             default:
-                printf("\nERROR: Invalid input.\n");
+                printf("ERROR: Invalid input.\n");
                 delay(1);
-                goto upOrDown;
+                loopBreak = true;
                 break;
             }
-            print_board(board);
-            break;
-        case 2:
-            break;
-
-        default:
-            printf("ERROR: Invalid input.\n");
-            delay(1);
-            goto reChoose;
-            break;
         }
     }
 }
@@ -302,6 +323,8 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
     int tokens = 0, column = 0;
     int choice;
     bool obstacle = false;
+
+    bool loopCheck = true, loopBreak;
 
     for (int i = 0; i < NUM_COLUMNS; i++)
     {
@@ -314,34 +337,38 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
 
     if (tokens > 1)
     {
-    rchoice:
-        printf("\n%d tokens on row %d to choose from! Which column would you like to move from?\n", tokens, dieRoll);
-        printf("Enter choice: ");
-        scanf("%d", &choice);
-        choice--;
-        if (choice < 0 || choice > 8)
+        while (loopCheck == true)
         {
-            printf("\nInvalid Input!\n");
-            goto rchoice;
-        }
-        if (board[dieRoll - 1][choice].numTokens == 0)
-        {
-            printf("\nThere are no tokens on this tile!\n");
-            goto rchoice;
-        }
-        else
-        {
-            obstacle = obstacleCheck(board, (dieRoll - 1), choice);
-            if (obstacle == false)
+            loopBreak = false;
+            printf("\n%d tokens on row %d to choose from! Which column would you like to move from?\n", tokens, dieRoll);
+            printf("Enter choice: ");
+            scanf("%d", &choice);
+            choice--;
+            if (choice < 0 || choice > 8)
             {
-                printf("\nMoving the token on column %d forward!\n", choice + 1);
-                push(board, board[dieRoll - 1][choice].stack->col, (dieRoll - 1), (choice + 1));
-                pop(board, (dieRoll - 1), choice); //Remove token from chosen tile
-                printLine();
+                printf("\nInvalid Input!\n");
+                loopBreak = true;
+            }
+            if (board[dieRoll - 1][choice].numTokens == 0)
+            {
+                printf("\nThere are no tokens on this tile!\n");
+                loopBreak = true;
             }
             else
             {
-                goto rchoice;
+                obstacle = obstacleCheck(board, (dieRoll - 1), choice);
+                if (obstacle == false)
+                {
+                    printf("\nMoving the token on column %d forward!\n", choice + 1);
+                    push(board, board[dieRoll - 1][choice].stack->col, (dieRoll - 1), (choice + 1));
+                    pop(board, (dieRoll - 1), choice); //Remove token from chosen tile
+                    printLine();
+                    loopCheck = false;
+                }
+                else
+                {
+                    loopBreak = true;
+                }
             }
         }
     }
@@ -372,14 +399,15 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
 bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
 {
     for (size_t j = 0; j < 6; j++)
-    {//Cycles through players
+    { //Cycles through players
         for (size_t i = 0; i < 6; i++)
-        {//Cycles through rows
+        { //Cycles through rows
             if ((board[i][8].stack != NULL) && (players[j]->col == board[i][8].stack->col))
             {
                 players[j]->numTokensLastCol++;
                 pop(board, i, 8);
-                if(players[j]->numTokensLastCol < 3){
+                if (players[j]->numTokensLastCol < 3)
+                {
                     printf("%s: Your token is home! %d more tokens needed to win.\n\n", players[j]->name, 3 - players[j]->numTokensLastCol);
                 }
             }
@@ -394,7 +422,6 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
             return false;
         }
     }
-    
 }
 
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column)
@@ -423,20 +450,22 @@ void delay(float number_of_seconds)
     clock_t start_time = clock();
 
     // looping till required time is not achieved
-    while (clock() < start_time + (int)milli_seconds);
+    while (clock() < start_time + (int)milli_seconds)
+        ;
 }
 
-void test(square board[NUM_ROWS][NUM_COLUMNS]){
+void test(square board[NUM_ROWS][NUM_COLUMNS])
+{
     int choice;
     int or, oc, dr, dc, col;
 
     printf("Would you like to place a token?\n1: Yes\n2: No\n");
     scanf("%d", &choice);
 
-    if(choice == 1){
+    if (choice == 1)
+    {
         printf("Enter the destination row & column in the format, and then the color of the token (dr dc col)\n");
         scanf("%d %d %d", &dr, &dc, &col);
-        push(board, col, dr-1, dc-1);
+        push(board, col, dr - 1, dc - 1);
     }
-    
 }
