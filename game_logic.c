@@ -170,7 +170,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers)
 {
     //Game status is true while the game is still running and false when the game is won or lost.
-    bool win;
+    bool win = false;
     int dieRoll;
 
     //Each loop represents a new round ingame.
@@ -184,7 +184,6 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
             moveHorizontal(board, players, dieRoll);
             win = winCheck(players[i]);
         }
-        win = true;
     }
 }
 
@@ -283,7 +282,7 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
             goto choice;
         }
         
-        push(board, board[dieRoll-1][choice].stack->col, dieRoll-1, choice+1);
+        push(board, board[dieRoll-1][choice].stack->col, dieRoll-1, choice);
         pop(board, dieRoll-1, choice);//Remove token from chosen tile
 
     } else if(tokens == 0){
@@ -297,11 +296,11 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
         pop(board, dieRoll-1, column);
     }
     print_board(board);
-    delay(3);
+    delay(1);
 }
 
 bool winCheck(player currentPlayer){
-
+    return false; //temp
 }
 
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column){
