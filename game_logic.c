@@ -115,7 +115,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
             while (loopCheck == true)
             {
                 loopBreak = false;
-                
+
                 //Asking for and collecting user's choice.
                 printf("%s, please enter a square: ", players[j].name);
                 scanf("%d", &selectedSquare);
@@ -128,7 +128,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                     puts("Error: Invalid input.");
                     loopBreak == true;
                 }
-                
+
                 //Verification check to make sure that the user is placing the token on a square with the minimum number of tokens.
                 if ((loopBreak == false) && (board[selectedSquare][0].numTokens == minNumOfTokens) && (board[selectedSquare][0].stack == NULL || board[selectedSquare][0].stack->col != players[j].col))
                 {
@@ -137,7 +137,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                     printf("\n");
                     loopCheck = false;
                 }
-                
+
                 //If they chose a square which has more tokens than the minNumOfTokens:
                 else if (loopBreak == false)
                 {
@@ -189,19 +189,19 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         for (int i = 0; i < numPlayers; i++)
         {
             test(board); //REMEMBER TO REMOVE.
-            
+
             //rollDie() function is stored in dieRoll variable to be passed in future calls.
             dieRoll = rollDie();
-            
+
             //Players are given the option to move vertically.
             moveVertical(board, players[i]);
-            
+
             //Token is moved horizontally.
             moveHorizontal(board, players, dieRoll);
-            
+
             //Check to see if the game has been won.
             win = winCheck(board, &players);
-            
+
             //Verification check that skips the next person's turn if someone has already won the game.
             if (win == true)
             {
@@ -220,10 +220,10 @@ int rollDie()
 {
     //Seed is generated based on time elapsed since 1 Jan 1970.
     srand(time(NULL));
-    
+
     //Random number is generated and stored in dieRoll.
     int dieRoll = rand() % 6 + 1;
-    
+
     //Value is printed to console.
     printf("\nDie rolling");
     delay(0.5);
@@ -232,7 +232,7 @@ int rollDie()
     printf(".");
     printf(" %d!\n\n", dieRoll);
     delay(1);
-    
+
     //Value is returned to play_game function.
     return dieRoll;
 }
@@ -246,7 +246,7 @@ int rollDie()
 void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer)
 {
     //Declaring choice variables.
-    int choice; // used for choosing whether to move at all or not.
+    int choice;                           // used for choosing whether to move at all or not.
     int rowChoice, colChoice, moveChoice; //used for choosing which token to move and which direction (up/down).
 
     //Bools declared for use in verification checks to break loop.
@@ -257,7 +257,7 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer)
     {
         //Verification check reset every loop.
         loopBreak = false;
-        
+
         //Asking player if they want to move a token and storing input.
         printf("\n%s, would you like to move one of your tokens up/down?\n", currentPlayer.name);
         printf("1: Yes\n");
@@ -302,7 +302,7 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer)
                 print_board(board);
                 loopBreak = true;
             }
-            
+
             //If all verifications are passed:
             if ((loopBreak == false) && (board[rowChoice][colChoice].stack->col == currentPlayer.col))
             {
@@ -320,7 +320,7 @@ void moveVertical(square board[NUM_ROWS][NUM_COLUMNS], player currentPlayer)
                         delay(0.5);
                         loopCheck = false;
                     }
-                    
+
                     //If the choice is in the top row this ensures that the token is only moved down.
                     else if (rowChoice == 0)
                     {
@@ -404,26 +404,26 @@ void moveHorizontal(square board[NUM_ROWS][NUM_COLUMNS], player players[9], int 
         }
     }
 
-    //If there is more than 1 token on the selected row: 
+    //If there is more than 1 token on the selected row:
     if (tokens > 1)
     {
         while (loopCheck == true) //verification check.
         {
             loopBreak = false;
-            
-            //Player is prompted to selected one token from the multiple in that row. 
+
+            //Player is prompted to selected one token from the multiple in that row.
             printf("\n%d tokens on row %d to choose from! Which column would you like to move from?\n", tokens, dieRoll);
             printf("Enter choice: ");
             scanf("%d", &choice);
             choice--;
-            
+
             //Verification check.
             if (choice < 0 || choice > 8)
             {
                 printf("\nInvalid Input!\n");
                 loopBreak = true;
             }
-            
+
             //Verification check: if there are any tokens on the selected column.
             if (board[dieRoll - 1][choice].numTokens == 0)
             {
@@ -496,14 +496,14 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
     {
         //Cycles through rows:
         for (size_t i = 0; i < 6; i++)
-        { 
+        {
             //If the player has a token on the last column..
             if ((board[i][8].stack != NULL) && (players[j]->col == board[i][8].stack->col))
             {
                 //.. a point is allocated and the token is popped off the board.
                 players[j]->numTokensLastCol++;
                 pop(board, i, 8);
-                
+
                 //If the player hasn't won yet it shows how many more points are needed.
                 if (players[j]->numTokensLastCol < 3)
                 {
@@ -511,7 +511,7 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
                 }
             }
         }
-        
+
         //If the player has 3 or more points:
         if (players[j]->numTokensLastCol >= 3)
         {
@@ -535,7 +535,7 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
  */
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column)
 {
-     //If the token on an obstacle square:
+    //If the token on an obstacle square:
     if (board[row][column].type == OBSTACLE)
     {
         //If there is tokens on either side of the obstacle square:
