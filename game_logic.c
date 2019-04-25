@@ -188,7 +188,6 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         //Each loop represents each players go.
         for (int i = 0; i < numPlayers; i++)
         {
-            test(board); //REMEMBER TO REMOVE.
 
             //rollDie() function is stored in dieRoll variable to be passed in future calls.
             dieRoll = rollDie();
@@ -570,21 +569,4 @@ void delay(float number_of_seconds)
     //Looping till required time is not achieved:
     while (clock() < start_time + (int)milli_seconds)
         ;
-}
-
-//DONT FORGET TO REMOVE:
-void test(square board[NUM_ROWS][NUM_COLUMNS])
-{
-    int choice;
-    int or, oc, dr, dc, col;
-
-    printf("Would you like to place a token?\n1: Yes\n2: No\n");
-    scanf("%d", &choice);
-
-    if (choice == 1)
-    {
-        printf("Enter the destination row & column in the format, and then the color of the token (dr dc col)\n");
-        scanf("%d %d %d", &dr, &dc, &col);
-        push(board, col, dr - 1, dc - 1);
-    }
 }
