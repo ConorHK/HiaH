@@ -141,6 +141,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                 //If they chose a square which has more tokens than the minNumOfTokens:
                 else if (loopBreak == false)
                 {
+                    loopBreak == true;
                     //Prints out the valid moves for clarity.
                     puts("Error: Invalid input.");
                     printf("\nValid moves: ");
@@ -153,7 +154,6 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
                     }
                     printf("\n");
 
-                    loopBreak == true;
                 }
 
                 //Updates the minimum number of tokens.
@@ -188,9 +188,9 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         //Each loop represents each players go.
         for (int i = 0; i < numPlayers; i++)
         {
-
             //rollDie() function is stored in dieRoll variable to be passed in future calls.
-            dieRoll = rollDie();
+            // dieRoll = rollDie();
+            dieRoll = test(board);
 
             //Players are given the option to move vertically.
             moveVertical(board, players[i]);
@@ -204,6 +204,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
             //Verification check that skips the next person's turn if someone has already won the game.
             if (win == true)
             {
+                printf("GAME OVER\n");
                 break;
             }
         }
@@ -506,16 +507,15 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
                 //If the player hasn't won yet it shows how many more points are needed.
                 if (players[j]->numTokensLastCol < 3)
                 {
-                    printf("%s: Your token is home! %d more tokens needed to win.\n\n", players[j]->name, 3 - players[j]->numTokensLastCol);
+                    printf("%s, your token is home! %d more tokens needed to win.\n\n", players[j]->name, 3 - players[j]->numTokensLastCol);
                 }
             }
         }
-
         //If the player has 3 or more points:
         if (players[j]->numTokensLastCol >= 3)
         {
             //They win and true is returned to play_game function.
-            printf("\n\n%s is the winner!\n", *players[j]->name);
+            printf("\n\n%s is the winner!\n", players[j]->name);
             return true;
         }
         //Otherwise game continues.
@@ -537,20 +537,24 @@ bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column)
     //If the token on an obstacle square:
     if (board[row][column].type == OBSTACLE)
     {
-        //If there is tokens on either side of the obstacle square:
-        if (board[row][column + 1].numTokens > 0 || board[row][column - 1].numTokens > 0)
+        //If there is tokens in any row any column behind the obstacle.
+        for (size_t i = (column - 1); i > 0; i--)
         {
-            //False is returned: no obstruction.
-            return false;
+            for (size_t j = 0; j < 6; j++)
+            {
+                if (board[j][i].numTokens > 0)
+                {
+                    //Token is stuck:
+                    printf("Your token is stuck on an obstacle!\n");
+                    
+                    return true;
+                }
+            }
         }
-        //Otherwise token is stuck:
-        else
-        {
-            printf("Your token is stuck on an obstacle!\n");
-            return true;
-        }
+        
+        //False is returned: no obstruction.
+        return false;
     }
-    return false;
 }
 
 /*
@@ -569,4 +573,21 @@ void delay(float number_of_seconds)
     //Looping till required time is not achieved:
     while (clock() < start_time + (int)milli_seconds)
         ;
+}
+
+int test(square board[NUM_ROWS][NUM_COLUMNS]){
+    int choice = 1;
+    int or, oc, dr, dc, col, roll;
+
+    while(choice == 1){
+    printf("Would you like to place a token?\n1: Yes\n2: No\n");
+    scanf("%d", &choice);
+
+    if(choice == 1){
+        printf("Enter the destination row & column in the format, and then the color of the token (dr dc col), and dice roll\n");
+        scanf("%d %d %d %d", &dr, &dc, &col, &roll);
+        push(board, col, dr-1, dc-1);
+    }
+}
+return roll;
 }

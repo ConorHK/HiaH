@@ -2,3 +2,5 @@
 *.vscode
 Practical29-03.pdf
 *.doc
+*.pdf
+.gitignore
