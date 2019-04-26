@@ -531,6 +531,8 @@ bool winCheck(square board[NUM_ROWS][NUM_COLUMNS], player *players[6])
  * 
  * Input: board - a 6x9 array of squares that represents the board.
  *        Value of row and column the token resides on.
+ * 
+ * NOTE: WE CHANGED HOW OBSTACLES FUNCTION AFTER SUBMITTING THE REPORT.
  */
 bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column)
 {
