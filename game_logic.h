@@ -78,5 +78,3 @@ bool obstacleCheck(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
  * Input: number of seconds to delay by.
  */
 void delay(float number_of_seconds);
-
-int test(square board[NUM_ROWS][NUM_COLUMNS]);

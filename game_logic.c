@@ -189,8 +189,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
         for (int i = 0; i < numPlayers; i++)
         {
             //rollDie() function is stored in dieRoll variable to be passed in future calls.
-            // dieRoll = rollDie();
-            dieRoll = test(board);
+            dieRoll = rollDie();
 
             //Players are given the option to move vertically.
             moveVertical(board, players[i]);
@@ -575,21 +574,4 @@ void delay(float number_of_seconds)
     //Looping till required time is not achieved:
     while (clock() < start_time + (int)milli_seconds)
         ;
-}
-
-int test(square board[NUM_ROWS][NUM_COLUMNS]){
-    int choice = 1;
-    int or, oc, dr, dc, col, roll;
-
-    while(choice == 1){
-    printf("Would you like to place a token?\n1: Yes\n2: No\n");
-    scanf("%d", &choice);
-
-    if(choice == 1){
-        printf("Enter the destination row & column in the format, and then the color of the token (dr dc col), and dice roll\n");
-        scanf("%d %d %d %d", &dr, &dc, &col, &roll);
-        push(board, col, dr-1, dc-1);
-    }
-}
-return roll;
 }
